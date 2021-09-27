@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLASSPAPER</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  <metahttp-equiv='X-UA-Compatible'content='IE=edge'>
+	<title>Glasspaper</title>
+	<metaname='viewport'content='width=device-width,initial-scale=1'>
+	<script src='node_modules/web3.js-browser/build/web3.js'></script>
+	<script src="./node_modules/web3/dist/web3.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+
+
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="text-align: center;">GlassPaper Supply Chain</h1>
+      <hr>
+      <p style="text-align: center;">Prove the authenticity of your products using the Ethereum blockchain</p>
+    </div>
+
+    <div id="ftc-harvest">
+      <h2>Product Details</h2>
+      <div class="form-group">
+          Enter the hash of Product
+          <br>
+    
+          <input type="text" id="productPrice3" name="productPrice" value="0x23567"><br>
+          
+          <br>
+          <h4><u>Product details</u></h4>
+          <h4 id="instructor"></h2>
+
+          <h4 id="instructor11"></h2>
+
+          <h4 id="instructor12"></h2>
+          
+          <h4 id="instructor1"></h2>
+          
+          <h4 id="instructor2"></h2>
+          
+          <h4 id="instructor3"></h2>
+
+            <h4 id="instructor4"></h2>
+
+              <h4><u>Process Details</u></h4>
+
+              <h3 id="instructors0"></h2>
+
+                <h3 id="instructors"></h2>
+
+                <h3 id="instructors1"></h2>
+
+                  <h3 id="instructors2"></h2>
+          
+                    <h3 id="instructors3"></h2>
+          
+                      <h3 id="instructors4"></h2>
+          
+                        <h3 id="instructors5"></h2>
+
+                          <h3 id="instructors6"></h2>
+
+                            <h4>-----------------------------------</h4>
+                            <h3 id="instructorz"></h2>
+              <h3 id="instructorz1"></h2>
+                <h3 id="instructorz2"></h2>
+                  <h3 id="instructorz3"></h2>
+                    <h3 id="instructorz4"></h2>
+                      <h3 id="instructorz5"></h2>
+                         <h3 id="instructorz6"></h2>
+              
+
+            <h4 id="instructor4"></h2>
+          <br>
+          <button class="btn-buy" id="button" type="button">Get Info</button>
+      </div>
+      <div class=form-break></div>
+      <hr>
+    </div>
+    <script>
+
+      /*   window.addEventListener('load', () => {
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            console.log('No web3? You should consider trying MetaMask!');
+            web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+        }
+    });
+    
+    */
+          //   else {
+    
+                // console.log("Install MetaMask");
+                
+
+
+                 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+    
+             
+        
+    let addr;
+        
+         web3.eth.getAccounts().then(accounts =>
+         {
+          //console.log(accounts);
+          addr = accounts;
+          //console.log("$$$");
+          console.log(addr[0]);
+          web3.eth.defaultAccount =addr[0];
+        });
+      
+              var Contract1 = new web3.eth.Contract([
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "name": "Processhmade",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "processhash",
+      "type": "event"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "processes",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "manufacturer",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "manufacturerName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "serial_number",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "process_type",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "creation_date",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "longLat",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "products",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "manufacturer",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "manufacturerName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "longLat",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "serial_number",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "product_type",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "creation_date",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "a1",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "s1",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "s2",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "s3",
+          "type": "string"
+        }
+      ],
+      "name": "concatenateInfoAndHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "manuf",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "serial_number",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "manufacturerName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "longLat",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "process_type",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "creation_date",
+          "type": "string"
+        }
+      ],
+      "name": "buildProcess",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "serial_number",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "manufacturerName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "longLat",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "product_type",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "creation_date",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "process_array",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "buildProduct",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "product_hash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getProcess",
+      "outputs": [
+        {
+          "internalType": "bytes32[]",
+          "name": "",
+          "type": "bytes32[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],'0xdAba92D41DD77C9fe07e76BE343Ea5Af652d0422');
+    var a1 = $("#fno").val();
+	//var a2 = $("#lno").val();
+	//var a3 = $("#lno1").val();
+	//var a4 = $("#lno2").val();
+  //  var a5= $("#lno2").val();
+
+
+	
+        $("#button").click( async function() {
+			var a1 =await $("#productPrice3").val();
+		//var a2 = await $("#lno").val();
+		//var a3 = await $("#lno1").val();
+       // var a4 = await $("#lno2").val();
+        //var a5= await $("#lno3").val();
+		//let a6 = a5.split(",");
+
+		console.log(a1);
+		//console.log(a2);
+		//console.log(a3);
+	//	console.log(a4);
+       // console.log(a5);
+
+            //Contract1.methods.buildProduct(a2,a3,a4,a6)
+            //.send({from:'0x756C66210704ed4Fa3f7dCefdD5930b679456ca4',gas:8900000000009090}).then(console.log("done"))
+            let result=await Contract1.methods.getProcess(a1).call();
+            console.log(result)
+          /*  for(let i=0;i<4;i++)
+            {
+                $("#instructor").html("process hash->" +result[i]+ "\n");
+            }*/
+         /*  $("#instructor").html("process hash->" +result[0]+ "\n"+result[1]+ "\n"+result[2]);*/
+            let result1=await Contract1.methods.products(a1).call();
+            console.log(result1)
+            
+            $("#instructor11").html("Manufacturer:->"+result1[0]);
+            $("#instructor12").html ("Manufacturer Name:-->" +result1[2]);
+            $("#instructor1").html ("serial_number:-->"+result1[3]);
+            $("#instructor4").html("location:-->"+result1[3]);
+            $("#instructor2").html("creation_date:-->"+result1[5]);
+            $("#instructor3").html ("product_type:-->" +result1[1]);
+
+
+            let result2=await Contract1.methods.processes(result[0]).call();
+            console.log(result)
+            $("#instructors0").html("HASH:->"+result[0]);
+            $("#instructors5").html("location:->"+result2[3]);
+            $("#instructors").html("Manufacturer:->"+result2[0]);
+            $("#instructors2").html("Manufacturer Name:->"+result2[2]);
+            $("#instructors3").html("serial no:->"+result2[1]);
+            $("#instructors4").html("Process Type:->"+result2[4]);
+            $("#instructors1").html("Manufacturing Date:->"+result2[5]);
+
+            let result3=await Contract1.methods.processes(result[1]).call();
+            $("#instructorz").html("HASH:->"+result[1]);
+            $("#instructorz6").html("location:->"+result3[3]);
+            $("#instructorz1").html("Manufacturer:->"+result3[0]);
+            $("#instructorz3").html("Manufacturer Name:->"+result3[2]);
+            $("#instructorz4").html("serial no:->"+result3[1]);
+            $("#instructorz5").html("Process Type:->"+result3[4]);
+            $("#instructorz2").html("Manufacturing Date:->"+result3[5]);
+
+
+        });
+
+		
+        
+</script>
