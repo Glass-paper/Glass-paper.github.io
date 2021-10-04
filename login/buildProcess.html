@@ -9,12 +9,9 @@
   <metahttp-equiv='X-UA-Compatible'content='IE=edge'>
 	<title>GlassPaper</title>
 	<metaname='viewport'content='width=device-width,initial-scale=1'>
- <script src='node_modules/web3.js-browser/build/web3.js'></script>
-	<script src="./node_modules/web3/dist/web3.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
-
+  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+  type="application/javascript"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
   </head>
   <body>
@@ -53,7 +50,9 @@
           <input type="text" id="distributorID" name="distributorID" placeholder="0x0000000000000000000000000000000000000000"
               size="64" disabled>
             //-->
-            <h2 id="instructor"></h2>
+            <table>
+              <th id="instructor"></th>
+          </table>
           <br>
           <button class="btn-harvest" id="button" type="button"">Submit</button>
       </div>
@@ -61,37 +60,15 @@
 
       <script>
 
-         /* window.addEventListener('load', () => {
-          if (typeof web3 !== 'undefined') {
-              web3 = new Web3(web3.currentProvider);
-          } else {
-              console.log('No web3? You should consider trying MetaMask!');
-              web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
-          }
-      });
-      
-      
-               else {
-      
-                   console.log("Install MetaMask");*/
-        
-                 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
-               //}
-               
-               
-          
-      let addr;
-          
-           web3.eth.getAccounts().then(accounts =>
-           {
-            //console.log(accounts);
-            addr = accounts;
-            //console.log("$$$");
-            console.log(addr[0]);
-            web3.eth.defaultAccount =addr[0];
-          });
-        
-                var Contract1 = new web3.eth.Contract([
+const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+// The Metamask plugin also allows signing transactions to
+// send ether and pay to change state within the blockchain.
+// For this, you need the account signer...
+const signer = provider.getSigner(0);
+
+let contAdd= "0x0061B7Bd6820802CFFc6770e86976BC5F71EE2c1";
+let contABI= [
     {
       "inputs": [],
       "payable": false,
@@ -377,7 +354,9 @@
       "stateMutability": "view",
       "type": "function"
     }
-  ],'0xdAba92D41DD77C9fe07e76BE343Ea5Af652d0422');
+  ];
+  const contract = new ethers.Contract(contAdd,contABI, signer);
+const WithSigner =contract.connect(signer);
                 //console.log(Contract1);
                 var res;
             
@@ -401,13 +380,13 @@
           console.log(a3);
           console.log(a4);
       
-                  Contract1.methods.buildProcess(a1,a2,a11,a12,a3,a4)
-                  .send({from:web3.eth.defaultAccount,gas:8900000000009090}).then(console.log("done"))
+                  let p=await contract.buildProcess(a1,a2,a11,a12,a3,a4).then(console.log("done"))
+                  console.log(p);
       
       
                          
-      
-                let result=await Contract1.methods.concatenateInfoAndHash(a1,a2,a3,a4).call();
+      console.log(provider[0]);
+                let result=await contract.concatenateInfoAndHash(a1,a2,a3,a4);
                 console.log(result);
               //{
                  
@@ -418,6 +397,7 @@
                       
                  
              });
+
       
           
               
