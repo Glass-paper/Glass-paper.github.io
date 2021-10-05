@@ -4,5 +4,10 @@ package-lock.json
 package.json
 migrations/
 truffle-config.js
+ERC-20/vendor/
+ERC-20/package
+ERC-20/package-lock
+ERC-20/scss
+
 
 

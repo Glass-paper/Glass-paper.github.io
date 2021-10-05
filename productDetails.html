@@ -9,11 +9,12 @@
   <metahttp-equiv='X-UA-Compatible'content='IE=edge'>
 	<title>Glasspaper</title>
 	<metaname='viewport'content='width=device-width,initial-scale=1'>
-	<script src='node_modules/web3.js-browser/build/web3.js'></script>
-	<script src="./node_modules/web3/dist/web3.min.js"></script>
+
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+  type="application/javascript"></script>
+  
 
 
   </head>
@@ -100,23 +101,11 @@
                 // console.log("Install MetaMask");
                 
 
+                const provider = new ethers.providers.Web3Provider(window.ethereum)
+     const signer = provider.getSigner(0);
 
-                 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
-    
-             
-        
-    let addr;
-        
-         web3.eth.getAccounts().then(accounts =>
-         {
-          //console.log(accounts);
-          addr = accounts;
-          //console.log("$$$");
-          console.log(addr[0]);
-          web3.eth.defaultAccount =addr[0];
-        });
-      
-              var Contract1 = new web3.eth.Contract([
+let contAdd= "0x0061B7Bd6820802CFFc6770e86976BC5F71EE2c1";
+let contABI= [
     {
       "inputs": [],
       "payable": false,
@@ -402,7 +391,9 @@
       "stateMutability": "view",
       "type": "function"
     }
-  ],'0xdAba92D41DD77C9fe07e76BE343Ea5Af652d0422');
+  ];
+  const contract = new ethers.Contract(contAdd,contABI, signer);
+const WithSigner =contract.connect(signer);
     var a1 = $("#fno").val();
 	//var a2 = $("#lno").val();
 	//var a3 = $("#lno1").val();
@@ -427,14 +418,14 @@
 
             //Contract1.methods.buildProduct(a2,a3,a4,a6)
             //.send({from:'0x756C66210704ed4Fa3f7dCefdD5930b679456ca4',gas:8900000000009090}).then(console.log("done"))
-            let result=await Contract1.methods.getProcess(a1).call();
+            let result=await contract.getProcess(a1);
             console.log(result)
           /*  for(let i=0;i<4;i++)
             {
                 $("#instructor").html("process hash->" +result[i]+ "\n");
             }*/
          /*  $("#instructor").html("process hash->" +result[0]+ "\n"+result[1]+ "\n"+result[2]);*/
-            let result1=await Contract1.methods.products(a1).call();
+            let result1=await contract.products(a1);
             console.log(result1)
             
             $("#instructor11").html("Manufacturer:->"+result1[0]);
@@ -445,7 +436,7 @@
             $("#instructor3").html ("product_type:-->" +result1[1]);
 
 
-            let result2=await Contract1.methods.processes(result[0]).call();
+            let result2=await contract.processes(result[0]);
             console.log(result)
             $("#instructors0").html("HASH:->"+result[0]);
             $("#instructors5").html("location:->"+result2[3]);
@@ -455,7 +446,7 @@
             $("#instructors4").html("Process Type:->"+result2[4]);
             $("#instructors1").html("Manufacturing Date:->"+result2[5]);
 
-            let result3=await Contract1.methods.processes(result[1]).call();
+            let result3=await contract.processes(result[1]);
             $("#instructorz").html("HASH:->"+result[1]);
             $("#instructorz6").html("location:->"+result3[3]);
             $("#instructorz1").html("Manufacturer:->"+result3[0]);

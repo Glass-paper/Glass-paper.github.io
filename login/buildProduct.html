@@ -9,10 +9,11 @@
   <metahttp-equiv='X-UA-Compatible'content='IE=edge'>
 	<title>GlassPaper</title>
 	<metaname='viewport'content='width=device-width,initial-scale=1'>
-	<script src='node_modules/web3.js-browser/build/web3.js'></script>
-	<script src="./node_modules/web3/dist/web3.min.js"></script>
+	
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+  type="application/javascript"></script>
 
   </head>
   <body>
@@ -75,22 +76,15 @@
     
                 // console.log("Install MetaMask");
     
-                 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
-    
-             
-        
-    let addr;
-        
-         web3.eth.getAccounts().then(accounts =>
-         {
-          //console.log(accounts);
-          addr = accounts;
-          //console.log("$$$");
-          console.log(addr[0]);
-          web3.eth.defaultAccount =addr[0];
-        });
-      
-              var Contract1 = new web3.eth.Contract([
+                const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+// The Metamask plugin also allows signing transactions to
+// send ether and pay to change state within the blockchain.
+// For this, you need the account signer...
+const signer = provider.getSigner(0);
+
+let contAdd= "0x0061B7Bd6820802CFFc6770e86976BC5F71EE2c1";
+let contABI= [
     {
       "inputs": [],
       "payable": false,
@@ -376,10 +370,9 @@
       "stateMutability": "view",
       "type": "function"
     }
-  ],'0xdAba92D41DD77C9fe07e76BE343Ea5Af652d0422');
-              //console.log(Contract1);
-              var res;
-          
+  ];
+  const contract = new ethers.Contract(contAdd,contABI, signer);
+const WithSigner =contract.connect(signer);
           
           
       var a1 = $("#fno").val();
@@ -409,8 +402,8 @@
         console.log(a4);
             console.log(a5);
     
-                Contract1.methods.buildProduct(a2,a11,a12,a3,a4,a6)
-                .send({from:'0xc697bBE8FfF065eb4B2C22c0870cbc60D848e41D',gas:8900000000009090}).then(console.log("done"))
+               // Contract1.methods.buildProduct(a2,a11,a12,a3,a4,a6)
+               // .send({from:'0xc697bBE8FfF065eb4B2C22c0870cbc60D848e41D',gas:8900000000009090}).then(console.log("done"))
     
     
                /* var serial = document.getElementById("process-hash").value
@@ -422,12 +415,16 @@
                 }
                 */
     
-              let result=await Contract1.methods.concatenateInfoAndHash(a1,a2,a3,a4).call();
-              console.log(result);
+             // let result=await Contract1.methods.concatenateInfoAndHash(a1,a2,a3,a4).call();
+            //  console.log(result);
             //{
+             var p= await contract.buildProduct(a2,a11,a12,a3,a4,a6);
+             let result=await contract.concatenateInfoAndHash(a1,a2,a3,a4);
                
                        $("#instructor").html(result);
                         //console.log(result);
+
+              
     
                     
                
