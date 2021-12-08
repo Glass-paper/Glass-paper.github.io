@@ -75,7 +75,7 @@
           //   else {
     
                 // console.log("Install MetaMask");
-    
+    window.ethereum.enable();
                 const provider = new ethers.providers.Web3Provider(window.ethereum)
 
 // The Metamask plugin also allows signing transactions to
