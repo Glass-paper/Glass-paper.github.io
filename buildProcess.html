@@ -66,7 +66,7 @@ const provider = new ethers.providers.Web3Provider(window.ethereum)
 // The Metamask plugin also allows signing transactions to
 // send ether and pay to change state within the blockchain.
 // For this, you need the account signer...
-//const signer = provider.getSigner();
+const signer = provider.getSigner();
 
 let contAdd= "0x0061B7Bd6820802CFFc6770e86976BC5F71EE2c1";
 let contABI= [
@@ -356,7 +356,7 @@ let contABI= [
       "type": "function"
     }
   ];
-  const contract = new ethers.Contract(contAdd,contABI);
+  const contract = new ethers.Contract(contAdd,contABI,signer);
 const WithSigner =contract.connect(signer);
                 //console.log(Contract1);
                 var res;
