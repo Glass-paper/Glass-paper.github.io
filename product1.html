@@ -5,7 +5,7 @@
 	<metahttp-equiv='X-UA-Compatible'content='IE=edge'>
 	<title>my webpage</title>
 	<metaname='viewport'content='width=device-width,initial-scale=1'>
-	<link rel="stylesheet" type="text/css" href="style1.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
@@ -20,7 +20,7 @@
 
 
 	<div class="login-box">
-		<h2>CREATE PROCESS</h2>
+		<h2>CREATE PRODUCT</h2>
 		<form>
 		  <div class="user-box">
 			<input type="text" id="originFisherName" name="" required="">
@@ -35,23 +35,23 @@
 			<label>Manufacturer Long/Lat</label>
 		  </div>
 		  <div class="user-box">
-			<input type="text" id="originFisherInformation" name="" required="">
-			<label>Process Serial No</label>
+			<input type="text" id="productPrice" name="" required="">
+			<label>Product Serial No</label>
 		  </div>
 		  <div class="user-box">
-			<input type="text" id="originFisherLatitude" name="" required="">
-			<label>Process Type</label>
+			<input type="text" id="productNotes" name="" required="">
+			<label>Product Type</label>
 		  </div>
 		  <div class="user-box">
-			<input type="text" id="originFisherLongitude" name="" required="">
+			<input type="text" id="productPrice2" name="" required="">
 			<label>Creation Date</label>
 		  </div>
 		  <div class="user-box">
-			<input type="text" id="originFisherCert" name="" required="">
-			<label>Certification Hash</label>
+			<input type="text" id="productPrice3" name="" required="">
+			<label>Proces Involved</label>
 		  </div>
 
-      <p>Process Hash</p>
+      <p>Product Hash</p>
 		  <div class="user-box">
 			<output type="text" id="instructor" name="" required="">
 			
@@ -71,356 +71,381 @@
 		  </a>
       </div>
 		
+	  </form>
+	</div>
 
 <script>
+  /*
+ if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            console.log('No web3? You should consider trying MetaMask!');
+            web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+        }
+    });
+    
+    */
+          //   else {
+    
+                // console.log("Install MetaMask");
+    window.ethereum.enable();
+                const provider = new ethers.providers.Web3Provider(window.ethereum)
 
-window.ethereum.enable();
+// The Metamask plugin also allows signing transactions to
+// send ether and pay to change state within the blockchain.
+// For this, you need the account signer...
+const signer = provider.getSigner(0);
 
-	const provider = new ethers.providers.Web3Provider(window.ethereum)
-	
-	// The Metamask plugin also allows signing transactions to
-	// send ether and pay to change state within the blockchain.
-	// For this, you need the account signer...
-	const signer = provider.getSigner(0);
-	
-	let contAdd= "0x0061B7Bd6820802CFFc6770e86976BC5F71EE2c1";
-	let contABI= [
-		{
-		  "inputs": [],
-		  "payable": false,
-		  "stateMutability": "nonpayable",
-		  "type": "constructor"
-		},
-		{
-		  "anonymous": false,
-		  "inputs": [
-			{
-			  "indexed": false,
-			  "internalType": "string",
-			  "name": "",
-			  "type": "string"
-			},
-			{
-			  "indexed": false,
-			  "internalType": "string",
-			  "name": "",
-			  "type": "string"
-			},
-			{
-			  "indexed": false,
-			  "internalType": "string",
-			  "name": "",
-			  "type": "string"
-			}
-		  ],
-		  "name": "Processhmade",
-		  "type": "event"
-		},
-		{
-		  "anonymous": false,
-		  "inputs": [
-			{
-			  "indexed": false,
-			  "internalType": "bytes32",
-			  "name": "",
-			  "type": "bytes32"
-			}
-		  ],
-		  "name": "processhash",
-		  "type": "event"
-		},
-		{
-		  "constant": true,
-		  "inputs": [
-			{
-			  "internalType": "bytes32",
-			  "name": "",
-			  "type": "bytes32"
-			}
-		  ],
-		  "name": "processes",
-		  "outputs": [
-			{
-			  "internalType": "address",
-			  "name": "manufacturer",
-			  "type": "address"
-			},
-			{
-			  "internalType": "string",
-			  "name": "manufacturerName",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "serial_number",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "process_type",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "creation_date",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "longLat",
-			  "type": "string"
-			}
-		  ],
-		  "payable": false,
-		  "stateMutability": "view",
-		  "type": "function"
-		},
-		{
-		  "constant": true,
-		  "inputs": [
-			{
-			  "internalType": "bytes32",
-			  "name": "",
-			  "type": "bytes32"
-			}
-		  ],
-		  "name": "products",
-		  "outputs": [
-			{
-			  "internalType": "address",
-			  "name": "manufacturer",
-			  "type": "address"
-			},
-			{
-			  "internalType": "string",
-			  "name": "manufacturerName",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "longLat",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "serial_number",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "product_type",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "creation_date",
-			  "type": "string"
-			}
-		  ],
-		  "payable": false,
-		  "stateMutability": "view",
-		  "type": "function"
-		},
-		{
-		  "constant": true,
-		  "inputs": [
-			{
-			  "internalType": "address",
-			  "name": "a1",
-			  "type": "address"
-			},
-			{
-			  "internalType": "string",
-			  "name": "s1",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "s2",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "s3",
-			  "type": "string"
-			}
-		  ],
-		  "name": "concatenateInfoAndHash",
-		  "outputs": [
-			{
-			  "internalType": "bytes32",
-			  "name": "",
-			  "type": "bytes32"
-			}
-		  ],
-		  "payable": false,
-		  "stateMutability": "pure",
-		  "type": "function"
-		},
-		{
-		  "constant": false,
-		  "inputs": [
-			{
-			  "internalType": "address",
-			  "name": "manuf",
-			  "type": "address"
-			},
-			{
-			  "internalType": "string",
-			  "name": "serial_number",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "manufacturerName",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "longLat",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "process_type",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "creation_date",
-			  "type": "string"
-			}
-		  ],
-		  "name": "buildProcess",
-		  "outputs": [
-			{
-			  "internalType": "bytes32",
-			  "name": "",
-			  "type": "bytes32"
-			}
-		  ],
-		  "payable": false,
-		  "stateMutability": "nonpayable",
-		  "type": "function"
-		},
-		{
-		  "constant": false,
-		  "inputs": [
-			{
-			  "internalType": "string",
-			  "name": "serial_number",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "manufacturerName",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "longLat",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "product_type",
-			  "type": "string"
-			},
-			{
-			  "internalType": "string",
-			  "name": "creation_date",
-			  "type": "string"
-			},
-			{
-			  "internalType": "bytes32[]",
-			  "name": "process_array",
-			  "type": "bytes32[]"
-			}
-		  ],
-		  "name": "buildProduct",
-		  "outputs": [
-			{
-			  "internalType": "bytes32",
-			  "name": "",
-			  "type": "bytes32"
-			}
-		  ],
-		  "payable": false,
-		  "stateMutability": "nonpayable",
-		  "type": "function"
-		},
-		{
-		  "constant": true,
-		  "inputs": [
-			{
-			  "internalType": "bytes32",
-			  "name": "product_hash",
-			  "type": "bytes32"
-			}
-		  ],
-		  "name": "getProcess",
-		  "outputs": [
-			{
-			  "internalType": "bytes32[]",
-			  "name": "",
-			  "type": "bytes32[]"
-			}
-		  ],
-		  "payable": false,
-		  "stateMutability": "view",
-		  "type": "function"
-		}
-	  ];
-	  const contract = new ethers.Contract(contAdd,contABI, signer);
-	const WithSigner =contract.connect(signer);
-					//console.log(Contract1);
-					var res;
-				
-				
-				
-		   
-		  
-			
-				  $("#button").click( async function() {
-				var a1 =await $("#originFisherName").val();
-				var a11 =await $("#originFisherName1").val();
-				var a12 =await $("#originFisherName2").val();
-			  var a2 = await $("#originFisherInformation").val();
-			  var a3 = await $("#originFisherLatitude").val();
-			  var a4 = await $("#originFisherLongitude").val();
-		  
-			  console.log(a1);
-			  console.log(a11);
-			  console.log(a12);
-			  console.log(a2);
-			  console.log(a3);
-			  console.log(a4);
-		  
-					  let p=await contract.buildProcess(a1,a2,a11,a12,a3,a4).then(console.log("done"))
-					  console.log(p);
-		  
-		  
-							 
-		  console.log(provider[0]);
-					let result=await contract.concatenateInfoAndHash(a1,a2,a3,a4);
-					console.log(result);
-				  //{
-					 
-							 $("#instructor").html(result);
-							  //console.log(result);
-							  //document.getElementById("distributorID").innerHTML = result;
-		  
-						  
-					 
-				 });
-	
-		  
-			  
-				  
-			  </script>
-		  
-		  </body>
-		  </html>
-		  
-	  </body>
-	</html>
+let contAdd= "0x0061B7Bd6820802CFFc6770e86976BC5F71EE2c1";
+let contABI= [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "name": "Processhmade",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "processhash",
+      "type": "event"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "processes",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "manufacturer",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "manufacturerName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "serial_number",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "process_type",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "creation_date",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "longLat",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "name": "products",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "manufacturer",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "manufacturerName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "longLat",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "serial_number",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "product_type",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "creation_date",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "a1",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "s1",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "s2",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "s3",
+          "type": "string"
+        }
+      ],
+      "name": "concatenateInfoAndHash",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "manuf",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "serial_number",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "manufacturerName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "longLat",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "process_type",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "creation_date",
+          "type": "string"
+        }
+      ],
+      "name": "buildProcess",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "serial_number",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "manufacturerName",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "longLat",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "product_type",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "creation_date",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "process_array",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "buildProduct",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "product_hash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getProcess",
+      "outputs": [
+        {
+          "internalType": "bytes32[]",
+          "name": "",
+          "type": "bytes32[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ];
+  const contract = new ethers.Contract(contAdd,contABI, signer);
+const WithSigner =contract.connect(signer);
+          
+          
+      var a1 = $("#fno").val();
+
+      var a2 = $("#lno").val();
+      var a3 = $("#lno1").val();
+      var a4 = $("#lno2").val();
+        var a5= $("#lno2").val();
+    
+    
+      
+            $("#button").click( async function() {
+          var a1 =await $("#originFisherName").val();
+          var a11 =await $("#originFisherName1").val();
+            var a12 =await $("#originFisherName2").val();
+        var a2 = await $("#productNotes").val();
+        var a3 = await $("#productPrice").val();
+            var a4 = await $("#productPrice2").val();
+            var a5= await $("#productPrice3").val();
+        let a6 = a5.split(",");
+    
+        console.log(a1);
+        console.log(a11);
+        console.log(a12);
+        console.log(a2);
+        console.log(a3);
+        console.log(a4);
+            console.log(a5);
+    
+               // Contract1.methods.buildProduct(a2,a11,a12,a3,a4,a6)
+               // .send({from:'0xc697bBE8FfF065eb4B2C22c0870cbc60D848e41D',gas:8900000000009090}).then(console.log("done"))
+    
+    
+               /* var serial = document.getElementById("process-hash").value
+                 if (serial != "") {
+                //Then the process that will be used in the product 
+                var part_array = []
+                for (var i = 0; i < part_list.length; i++) {
+                    part_array.push(part_list[i].textContent)
+                }
+                */
+    
+             // let result=await Contract1.methods.concatenateInfoAndHash(a1,a2,a3,a4).call();
+            //  console.log(result);
+            //{
+             var p= await contract.buildProduct(a2,a11,a12,a3,a4,a6);
+             let result=await contract.concatenateInfoAndHash(a1,a2,a3,a4);
+               
+                       $("#instructor").html(result);
+                        //console.log(result);
+
+              
+    
+                    
+               
+           });
+    
+        
+            
+        </script>
+  </body>
+</html>
+
